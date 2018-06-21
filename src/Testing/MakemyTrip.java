@@ -1,5 +1,6 @@
 package Testing;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,12 +9,14 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 
 public class MakemyTrip {
 	public static void main(String args[]) throws InterruptedException
 	{
+		System.setProperty("webdriver.chrome.driver","E:\\\\chromedriver.exe");
 		//Create prefs map to store all preferences 
 		Map<String, Object> prefs = new HashMap<String, Object>();
 
@@ -27,7 +30,7 @@ public class MakemyTrip {
 		//Now initialize chrome driver with chrome options which will switch off this browser notification on the chrome browser
 		WebDriver driver = new ChromeDriver(options);
 		
-		System.setProperty("webdriver.chrome.driver","E:\\\\chromedriver.exe");
+		
 //		WebDriver driver = new ChromeDriver();
 		driver.get("https://www.makemytrip.com/");
 		driver.findElement(By.id("hp-widget__sfrom")).click();
@@ -40,15 +43,28 @@ public class MakemyTrip {
 		driver.findElement(By.id("hp-widget__sTo")).click();
 		Thread.sleep(5000);
 		driver.findElement(By.xpath("//ul[@id='ui-id-2']//span[contains(text(),'Kolkata')]")).click();
+		
+		Actions action = new Actions(driver);
 		driver.findElement(By.id("hp-widget__depart")).click();
+		action.moveToElement(driver.findElement(By.xpath("(//a[@class='ui-state-default' and text()='11'])[1]"))).click().build().perform();
+		action.moveToElement(driver.findElement(By.xpath("(//a[@class='ui-state-default ui-state-hover' and text()='11'])[1]"))).click().build().perform();
+
+	//	driver.findElement(By.id("hp-widget__depart")).click();
+		Thread.sleep(2000);
+		//driver.findElement(By.xpath("//a[@class='ui-state-default'and text()='17'] /following-sibling::span[@class='calendarPrice low' and text()='4594']")).click();
+		driver.findElement(By.id("hp-widget__return")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//a[@class='ui-state-default' and text()='18'] / following-sibling::span[@class='calendarPrice low' and text()='4866']")).click();
+		driver.findElement(By.id("hp-widget__paxCounter_pot")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//ul[@class='adult_counter']/li [text()='4'] ")).click();
+		driver.findElement(By.xpath("//ul[@class='child_counter'] / li[text()='1']")).click();
+		driver.findElement(By.xpath("//ul[@class='infant_counter'] / li[text()='2']")).click();
 		
 		
 		
 		
-		
-		
-		
-		//		driver.close();
+		//driver.close();
 	}
 	
 	
